@@ -8,8 +8,7 @@ export default function Item({ i, onItemClick, addToCart }) {
     e.stopPropagation();
     setFav((prev) => !prev);
   };
-  //rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrvvvv
-  //ddddddddddddddddddddddddddddddddd
+
   const handleAddToCart = (e) => {
     e.stopPropagation();
     addToCart(i);
