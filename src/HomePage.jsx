@@ -4,6 +4,9 @@ import EnterData from "./EnterData";
 import SandBox from "./SandBox";
 import Header from "./Header";
 import ShopPage from "./ShopPage";
+import { Box } from "@mui/material";
+
+import theme from "./Theme";
 
 export default function HomePage({ itemsData }) {
   const [cart, setCart] = useState([]);
@@ -85,21 +88,16 @@ export default function HomePage({ itemsData }) {
     cart,
   };
   return (
-    <div>
+    <Box sx={{ bgcolor: "background.default", minHeight: "100vh", p: 2 }}>
       {!signed ? (
-        <EnterData
-          data={data}
-          img={data.img}
-          setData={setData}
-          setSigned={setSigned}
-        />
+        <EnterData data={data} setData={setData} setSigned={setSigned} />
       ) : (
         <>
           {/* <Header data={data} {...nav} /> */}
-          <ShopPage item={itemsData} />
+          <ShopPage data={data} item={itemsData} img={data.img} />
           <SandBox data={data} />
         </>
       )}
-    </div>
+    </Box>
   );
 }

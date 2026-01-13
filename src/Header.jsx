@@ -13,12 +13,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import logo from "./assets/IMG_7223.jpg";
+import theme from "./Theme";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export default function Header({
-  data = null,
+  data,
   navigateToCart,
   navigateToShop,
   cartCount = 0,
@@ -48,25 +48,15 @@ export default function Header({
   };
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        bgcolor: theme.palette.custom.veryDark,
+        color: theme.palette.text.primary,
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* Desktop Logo Section */}
-          <Box
-            component="img"
-            src={logo}
-            alt="Logo"
-            onClick={navigateToShop}
-            sx={{
-              display: { xs: "none", md: "flex" },
-              mr: 1,
-              cursor: "pointer",
-              maxWidth: "100px",
-              maxHeight: "100px",
-              width: "auto",
-              height: "auto",
-            }}
-          />
           <Typography
             variant="h6"
             noWrap
@@ -134,22 +124,6 @@ export default function Header({
             </Menu>
           </Box>
 
-          {/* Mobile Logo Section */}
-          <Box
-            component="img"
-            src={logo}
-            alt="Logo"
-            onClick={navigateToShop}
-            sx={{
-              display: { xs: "flex", md: "none" },
-              mr: 1,
-              cursor: "pointer",
-              maxWidth: "100px",
-              maxHeight: "100px",
-              width: "auto",
-              height: "auto",
-            }}
-          />
           <Typography
             variant="h5"
             noWrap

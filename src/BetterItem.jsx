@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Fav from "./Fav";
-import myButton from "./Button";
+import theme from "./Theme";
 
 const style = {
   position: "absolute",
@@ -12,10 +14,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: theme.palette.background.paper,
+  border: `2px solid ${theme.palette.secondary.main}`,
   boxShadow: 24,
   p: 4,
+  color: theme.palette.text.primary,
 };
 
 export default function BetterItem({ i, addToCart }) {
@@ -35,25 +38,74 @@ export default function BetterItem({ i, addToCart }) {
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen}>
-        <div>
-          <img
-            src={i.img}
-            alt={i.product}
-            style={{
-              maxWidth: "200px",
-              maxHeight: "200px",
+    <>
+      <Card
+        sx={{
+          bgcolor: "background.paper",
+          color: "text.primary",
+          cursor: "pointer",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          "&:hover": {
+            boxShadow: 6,
+          },
+        }}
+        onClick={handleOpen}
+      >
+        <CardContent
+          sx={{ flexGrow: 1, display: "flex", flexDirection: "column", p: 2 }}
+        >
+          <Box
+            sx={{
               width: "100%",
-              height: "auto",
+              height: "200px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 2,
+              bgcolor: "background.default",
+              borderRadius: 1,
             }}
-          />
-          <h4>{i.product}</h4>
-          <p>₪{i.price}</p>
-          <Fav onClick={toggleFav} fav={fav} />
-          <div onClick={(e) => e.stopPropagation()}></div>
-        </div>
-      </Button>
+          >
+            <img
+              src={i.img}
+              alt={i.product}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "200px",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "text.primary",
+              mt: 1,
+              minHeight: "3em",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {i.product}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ color: "text.secondary", mt: 1, mb: 1 }}
+          >
+            ₪{i.price}
+          </Typography>
+          <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
+            <Fav onClick={toggleFav} fav={fav} />
+          </Box>
+        </CardContent>
+      </Card>
       <Modal
         open={open}
         onClose={handleClose}
@@ -61,11 +113,16 @@ export default function BetterItem({ i, addToCart }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ color: "text.primary", mb: 2 }}
+          >
             {i.product}
           </Typography>
-          <Box>
-            <div>
+          <Box sx={{ my: 6 }}>
+            <Box>
               <img
                 src={i.img}
                 alt={i.product}
@@ -76,21 +133,35 @@ export default function BetterItem({ i, addToCart }) {
                   height: "auto",
                 }}
               />
-              <h4>{i.info}</h4>
-              <p>₪{i.price}</p>
+              <Typography
+                variant="body1"
+                sx={{ color: "text.primary", mt: 2, mb: 2 }}
+              >
+                {i.info}
+              </Typography>
+              <Typography variant="h6" sx={{ color: "text.secondary", mb: 2 }}>
+                ₪{i.price}
+              </Typography>
               <Fav onClick={toggleFav} fav={fav} />
-              <div onClick={(e) => e.stopPropagation()}>
+              <Box
+                onClick={(e) => e.stopPropagation()}
+                sx={{ mt: 2, display: "flex", gap: 2 }}
+              >
                 <Button color="success" variant="contained">
                   Buy Now!
                 </Button>
-                <Button onClick={handleAddToCart} variant="outlined">
+                <Button
+                  onClick={handleAddToCart}
+                  variant="outlined"
+                  sx={{ color: "text.primary", borderColor: "primary.main" }}
+                >
                   Add to cart
                 </Button>
-              </div>
-            </div>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }
