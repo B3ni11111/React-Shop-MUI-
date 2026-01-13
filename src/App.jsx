@@ -11,6 +11,9 @@ import hoodie3Img from "./assets/b_4.jpg";
 import macbookImg from "./assets/b_5.jpg";
 import coffieImg from "./assets/b_6.jpg";
 import pspImg from "./assets/b_7.jpg";
+import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
+import theme from "./Theme";
 
 function App() {
   const itemsData = [
@@ -93,10 +96,12 @@ function App() {
   ];
   return (
     <>
-      {/* <CssBaseline /> */}
-      {/* <SandBox /> */}
-      <HomePage itemsData={itemsData} />
-      {/* <BetterItem/> */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {/* <SandBox /> */}
+        <HomePage itemsData={itemsData} />
+        {/* <BetterItem/> */}
+      </ThemeProvider>
     </>
   );
 }

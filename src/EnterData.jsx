@@ -5,6 +5,10 @@ import { v4 as uuid } from "uuid";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -18,7 +22,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function EnterData({ data, setData, setSigned }) {
+export default function EnterData({ data, setData, setSigned, img }) {
   const handleChange = (evt) => {
     const { name, value, files } = evt.target;
 
@@ -29,74 +33,120 @@ export default function EnterData({ data, setData, setSigned }) {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault(); // מונע רענון
-          setSigned(true);
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        bgcolor: "background.default",
+        p: 3,
+      }}
+    >
+      <Card
+        sx={{
+          bgcolor: "background.paper",
+          color: "text.primary",
+          maxWidth: 400,
+          width: "100%",
+          p: 3,
         }}
       >
-        <TextField
-          required
-          id="filled-required"
-          label="Username"
-          variant="filled"
-          onChange={handleChange}
-          name="userName"
-        />
-        <TextField
-          required
-          id="filled-password-input"
-          label="Password"
-          type="password"
-          variant="filled"
-          onChange={handleChange}
-          name="password"
-        />
-        <Button
-          component="label"
-          role={undefined}
-          variant="outlined"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload files
-          <VisuallyHiddenInput
-            name="img"
-            type="file"
-            onChange={handleChange}
-            multiple
-          />
-        </Button>
-        <Avatar
-          alt="Beeny Bar"
-          src={data.img ? URL.createObjectURL(data.img) : ""}
-          sx={{ width: 56, height: 56 }}
-        />
-
-        {/* <label htmlFor="userName">Enter Username</label>
-        <input
-          type="text"
-          placeholder="userName"
-          value={data.userName}
-          onChange={handleChange}
-          name="userName"
-          id="userName"
-        /> */}
-        {/* <label htmlFor="password">Enter password</label>
-        <input
-          type="password"
-          placeholder="password"
-          value={data.password}
-          onChange={handleChange}
-          name="password"
-          id="password"
-        /> */}
-
-        <Button type="submit" variant="contained">
-          SignUp
-        </Button>
-      </form>
-    </div>
+        <CardContent>
+          <Typography variant="h4" sx={{ color: "text.primary", mb: 3, textAlign: "center" }}>
+            Sign Up
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSigned(true);
+            }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <TextField
+              required
+              id="filled-required"
+              label="Username"
+              variant="filled"
+              onChange={handleChange}
+              name="userName"
+              sx={{
+                "& .MuiInputBase-root": {
+                  bgcolor: "background.default",
+                  color: "text.primary",
+                },
+                "& .MuiInputLabel-root": {
+                  color: "text.secondary",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            />
+            <TextField
+              required
+              id="filled-password-input"
+              label="Password"
+              type="password"
+              variant="filled"
+              onChange={handleChange}
+              name="password"
+              sx={{
+                "& .MuiInputBase-root": {
+                  bgcolor: "background.default",
+                  color: "text.primary",
+                },
+                "& .MuiInputLabel-root": {
+                  color: "text.secondary",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+              }}
+            />
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+              sx={{
+                color: "text.primary",
+                borderColor: "primary.main",
+                "&:hover": {
+                  borderColor: "primary.dark",
+                  bgcolor: "action.hover",
+                },
+              }}
+            >
+              Upload files
+              <VisuallyHiddenInput
+                name="img"
+                type="file"
+                onChange={handleChange}
+                multiple
+              />
+            </Button>
+            {data.img && (
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Avatar
+                  alt="User Avatar"
+                  src={data.img ? URL.createObjectURL(data.img) : ""}
+                  sx={{ width: 56, height: 56 }}
+                />
+              </Box>
+            )}
+            <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+              SignUp
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

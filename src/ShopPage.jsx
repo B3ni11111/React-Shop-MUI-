@@ -3,8 +3,9 @@ import ShopItems from "./ShopItems";
 import Header from "./Header";
 import Cart from "./Cart";
 import ItemPage from "./ItemPage";
+import { Box } from "@mui/material";
 
-export default function ShopPage({ item }) {
+export default function ShopPage({ item, img, data }) {
   const [cart, setCart] = useState([]);
   console.log(cart);
   const [currentView, setCurrentView] = useState("shop");
@@ -60,11 +61,13 @@ export default function ShopPage({ item }) {
   };
 
   return (
-    <>
+    <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       <Header
         cartCount={getTotalItems()}
         navigateToCart={navigateToCart}
         navigateToShop={navigateToShop}
+        img={img}
+        data={data}
       />
       {currentView === "shop" && (
         <ShopItems
@@ -80,9 +83,6 @@ export default function ShopPage({ item }) {
           updateQuantity={updateQuantity}
         />
       )}
-      {currentView === "item" && selectedItem && (
-        <ItemPage item={selectedItem} addToCart={addToCart} />
-      )}
-    </>
+    </Box>
   );
 }
