@@ -3,18 +3,18 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#415a77", // הרקע שלך
+      main: "#415a77",
     },
     secondary: {
-      main: "#778da9", // צבע משני
+      main: "#778da9",
     },
     background: {
-      default: "#415a77", // רקע כללי
-      paper: "#1b263b", // רקע כרטיסים או קופסאות
+      default: "#415a77",
+      paper: "#1b263b",
     },
     text: {
-      primary: "#e0e1dd", // טקסט רגיל
-      secondary: "#778da9", // טקסט משני
+      primary: "#e0e1dd",
+      secondary: "#778da9",
     },
     custom: {
       dark: "#1b263b",

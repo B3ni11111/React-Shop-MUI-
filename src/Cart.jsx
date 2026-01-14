@@ -12,16 +12,14 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
   if (cart.length === 0) {
     return (
       <Box sx={{ bgcolor: "background.paper", p: 3, borderRadius: 2 }}>
-        <Typography variant="h4" sx={{ color: "text.primary" }}>
-          Your Cart is Empty
-        </Typography>
+        <Typography variant="h4">Your Cart is Empty</Typography>
       </Box>
     );
   }
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh", p: 2 }}>
-      <Typography variant="h3" sx={{ color: "text.primary", mb: 3 }}>
+      <Typography variant="h3" sx={{ mb: 3 }}>
         Shopping Cart
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -29,8 +27,6 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
           <Card
             key={item.id}
             sx={{
-              bgcolor: "background.paper",
-              color: "text.primary",
               display: "flex",
               p: 2,
               gap: 2,
@@ -48,13 +44,10 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
               }}
             />
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h6" sx={{ color: "text.primary", mb: 1 }}>
+              <Typography variant="h6" sx={{ mb: 1 }}>
                 {item.product}
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", mb: 2 }}
-              >
+              <Typography variant="body2" sx={{ mb: 2 }}>
                 ₪{item.price}
               </Typography>
               <Box
@@ -63,14 +56,13 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
                 <IconButton
                   size="small"
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  sx={{ color: "text.primary", bgcolor: "background.default" }}
+                  sx={{ bgcolor: "background.default" }}
                 >
                   <RemoveIcon />
                 </IconButton>
                 <Typography
                   variant="body1"
                   sx={{
-                    color: "text.primary",
                     minWidth: "30px",
                     textAlign: "center",
                   }}
@@ -80,7 +72,7 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
                 <IconButton
                   size="small"
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  sx={{ color: "text.primary", bgcolor: "background.default" }}
+                  sx={{ bgcolor: "background.default" }}
                 >
                   <AddIcon />
                 </IconButton>
@@ -92,14 +84,14 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
                   <DeleteIcon />
                 </IconButton>
               </Box>
-              <Typography variant="h6" sx={{ color: "text.secondary" }}>
+              <Typography variant="h6">
                 ₪{(item.price * item.quantity).toFixed(2)}
               </Typography>
             </Box>
           </Card>
         ))}
       </Box>
-      <Card sx={{ bgcolor: "background.paper", mt: 3, p: 3 }}>
+      <Card sx={{ mt: 3, p: 3 }}>
         <Box
           sx={{
             display: "flex",
@@ -107,7 +99,7 @@ export default function Cart({ cart, removeFromCart, updateQuantity }) {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4" sx={{ color: "text.primary" }}>
+          <Typography variant="h4">
             Total: ₪{getTotalPrice().toFixed(2)}
           </Typography>
           <Button text="Checkout" color="green" />

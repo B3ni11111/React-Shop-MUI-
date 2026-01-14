@@ -7,22 +7,28 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Fav from "./Fav";
 import theme from "./Theme";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const style = {
   position: "absolute",
-  top: "60%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: theme.palette.background.paper,
   border: `2px solid ${theme.palette.secondary.main}`,
   boxShadow: 24,
+  borderRadius: "20px",
   p: 4,
   color: theme.palette.text.primary,
 };
 
 export default function BetterItem({ i, addToCart }) {
   const [open, setOpen] = React.useState(false);
+  const [expandTitle, setExpandTitle] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -41,20 +47,23 @@ export default function BetterItem({ i, addToCart }) {
     <>
       <Card
         sx={{
-          bgcolor: "background.paper",
-          color: "text.primary",
+          borderRadius: "20px",
           cursor: "pointer",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          "&:hover": {
-            boxShadow: 6,
-          },
+          width: "100%",
+          maxWidth: 280,
+          height: 360,
+          mx: "auto",
+          "&:hover": { boxShadow: 6 },
         }}
         onClick={handleOpen}
       >
         <CardContent
-          sx={{ flexGrow: 1, display: "flex", flexDirection: "column", p: 2 }}
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            p: 2,
+          }}
         >
           <Box
             sx={{
@@ -83,7 +92,6 @@ export default function BetterItem({ i, addToCart }) {
           <Typography
             variant="h6"
             sx={{
-              color: "text.primary",
               mt: 1,
               minHeight: "3em",
               display: "-webkit-box",
@@ -91,14 +99,12 @@ export default function BetterItem({ i, addToCart }) {
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              wordWrap: "break-word",
             }}
           >
             {i.product}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "text.secondary", mt: 1, mb: 1 }}
-          >
+          <Typography variant="body1" sx={{ mt: 1, mb: 1 }}>
             ₪{i.price}
           </Typography>
           <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
@@ -113,14 +119,35 @@ export default function BetterItem({ i, addToCart }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ color: "text.primary", mb: 2 }}
-          >
-            {i.product}
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                WebkitLineClamp: expandTitle ? "unset" : 2,
+                transition: "0.3s",
+                flexGrow: 1,
+              }}
+            >
+              {i.product}
+            </Typography>
+
+            <IconButton
+              size="small"
+              onClick={() => setExpandTitle((prev) => !prev)}
+              sx={{ color: "text.secondary", mt: "2px" }}
+            >
+              {expandTitle ? (
+                <KeyboardArrowUpIcon />
+              ) : (
+                <KeyboardArrowDownIcon />
+              )}
+            </IconButton>
+          </Box>
+
           <Box sx={{ my: 6 }}>
             <Box>
               <img
@@ -133,10 +160,7 @@ export default function BetterItem({ i, addToCart }) {
                   height: "auto",
                 }}
               />
-              <Typography
-                variant="body1"
-                sx={{ color: "text.primary", mt: 2, mb: 2 }}
-              >
+              <Typography variant="body1" sx={{ mt: 2, mb: 2 }}>
                 {i.info}
               </Typography>
               <Typography variant="h6" sx={{ color: "text.secondary", mb: 2 }}>
@@ -153,7 +177,8 @@ export default function BetterItem({ i, addToCart }) {
                 <Button
                   onClick={handleAddToCart}
                   variant="outlined"
-                  sx={{ color: "text.primary", borderColor: "primary.main" }}
+                  sx={{ borderColor: "primary.main" }}
+                  endIcon={<AddShoppingCartIcon />}
                 >
                   Add to cart
                 </Button>
