@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 
 import theme from "./Theme";
 
-export default function HomePage({ itemsData }) {
+export default function HomePage({ itemsData, themeMode, toggleTheme }) {
   const [cart, setCart] = useState([]);
   const [currentView, setCurrentView] = useState("shop");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -94,7 +94,7 @@ export default function HomePage({ itemsData }) {
       ) : (
         <>
           {/* <Header data={data} {...nav} /> */}
-          <ShopPage data={data} item={itemsData} img={data.img} />
+          <ShopPage data={data} item={itemsData} img={data.img} themeMode={themeMode} toggleTheme={toggleTheme} />
           <SandBox data={data} />
         </>
       )}
