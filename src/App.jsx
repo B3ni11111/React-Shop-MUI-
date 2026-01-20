@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { v4 as uuid } from "uuid";
 import "./App.css";
 import HomePage from "./HomePage";
@@ -13,7 +14,8 @@ import coffieImg from "./assets/b_6.jpg";
 import pspImg from "./assets/b_7.jpg";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
-import theme from "./Theme";
+import { getTheme } from "./Theme";
+import useThemePreference from "./hooks/useThemePreference";
 
 function App() {
   const itemsData = [
@@ -94,12 +96,16 @@ function App() {
       info: "הכירו את Legion Go Gen 2 - הדור הבא של מחשב הגיימינג הנייד עטור הפרסים מבית Lenovo. עם בקרים ניתנים להסרה, מסך OLED עוצר נשימה בגודל 8.8 אינץ’ ובקצב רענון 144Hz, וסוללה עוצמתית ליותר זמן משחק - זהו הכוח והגמישות במיטבם, לכל מקום שתרצו לשחק בו.",
     },
   ];
+
+  const { mode, toggleTheme } = useThemePreference();
+  const theme = useMemo(() => getTheme(mode), [mode]);
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {/* <SandBox /> */}
-        <HomePage itemsData={itemsData} />
+        <HomePage itemsData={itemsData} themeMode={mode} toggleTheme={toggleTheme} />
         {/* <BetterItem/> */}
       </ThemeProvider>
     </>

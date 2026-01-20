@@ -1,15 +1,15 @@
 import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import ShopItems from "./ShopItems";
 import Header from "./Header";
 import Cart from "./Cart";
-import ItemPage from "./ItemPage";
+import About from "./About";
+import Profile from "./Profile";
 import { Box } from "@mui/material";
 
-export default function ShopPage({ item, img, data }) {
+export default function ShopPage({ item, img, data, themeMode, toggleTheme }) {
   const [cart, setCart] = useState([]);
-  console.log(cart);
-  const [currentView, setCurrentView] = useState("shop");
-  const [selectedItem, setSelectedItem] = useState(null);
+  const navigate = useNavigate();
 
   const addToCart = (item) => {
     setCart((prevCart) => {
@@ -23,12 +23,10 @@ export default function ShopPage({ item, img, data }) {
       }
       return [...prevCart, { ...item, quantity: 1 }];
     });
-    console.log(cart);
   };
 
   const removeFromCart = (itemId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
-    console.log(cart);
   };
 
   const updateQuantity = (id, newQ) => {
@@ -43,19 +41,26 @@ export default function ShopPage({ item, img, data }) {
     );
   };
 
-  const handleItemClick = (item) => {
-    setSelectedItem(item);
-    setCurrentView("item");
+  const handleItemClick = () => {
+    // Could navigate to item detail page if needed
   };
 
   const navigateToCart = () => {
-    setCurrentView("cart");
+    navigate("/cart");
   };
 
   const navigateToShop = () => {
-    setCurrentView("shop");
-    setSelectedItem(null);
+    navigate("/");
   };
+
+  const navigateToAbout = () => {
+    navigate("/about");
+  };
+
+  const navigateToProfile = () => {
+    navigate("/profile");
+  };
+
   const getTotalItems = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
@@ -66,23 +71,37 @@ export default function ShopPage({ item, img, data }) {
         cartCount={getTotalItems()}
         navigateToCart={navigateToCart}
         navigateToShop={navigateToShop}
+        navigateToAbout={navigateToAbout}
+        navigateToProfile={navigateToProfile}
         img={img}
         data={data}
+        themeMode={themeMode}
+        toggleTheme={toggleTheme}
       />
-      {currentView === "shop" && (
-        <ShopItems
-          data={item}
-          onItemClick={handleItemClick}
-          addToCart={addToCart}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ShopItems
+              data={item}
+              onItemClick={handleItemClick}
+              addToCart={addToCart}
+            />
+          }
         />
-      )}
-      {currentView === "cart" && (
-        <Cart
-          cart={cart}
-          removeFromCart={removeFromCart}
-          updateQuantity={updateQuantity}
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cart={cart}
+              removeFromCart={removeFromCart}
+              updateQuantity={updateQuantity}
+            />
+          }
         />
-      )}
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile data={data} />} />
+      </Routes>
     </Box>
   );
 }

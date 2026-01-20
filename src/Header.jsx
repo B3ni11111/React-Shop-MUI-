@@ -16,6 +16,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import theme from "./Theme";
 import logo2 from "./assets/logo2.jpg";
 import logo from "./assets/logo.jpg";
+import ThemeToggle from "./ThemeToggle";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -23,11 +24,15 @@ export default function Header({
   data,
   navigateToCart,
   navigateToShop,
+  navigateToAbout,
+  navigateToProfile,
   cartCount = 0,
+  themeMode,
+  toggleTheme,
 }) {
   const pages = [
     { id: 1, lable: "Home", fn: navigateToShop },
-    { id: 2, lable: "About", fn: null },
+    { id: 2, lable: "About", fn: navigateToAbout },
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -75,7 +80,7 @@ export default function Header({
               navigateToShop();
             }}
           />
-          {/* Mobile Menu Section */}
+
           <Box
             sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}
           >
@@ -87,7 +92,7 @@ export default function Header({
               onClick={handleOpenNavMenu}
               sx={{ m: 0, p: 0 }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: themeMode === "dark" ? "white" : "inherit" }} />
             </IconButton>
             <Box
               component="img"
@@ -135,7 +140,6 @@ export default function Header({
             </Menu>
           </Box>
 
-          {/* Desktop Navigation Buttons */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -150,6 +154,9 @@ export default function Header({
             ))}
           </Box>
 
+          {/* Spacer for mobile to push right items to the right */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} />
+
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1 }}
           >
@@ -160,6 +167,8 @@ export default function Header({
                 </Badge>
               </IconButton>
             </Tooltip>
+
+            <ThemeToggle mode={themeMode} toggleTheme={toggleTheme} />
 
             {data && (
               <>
@@ -189,7 +198,13 @@ export default function Header({
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <MenuItem
+                      key={setting}
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        if (setting === "Profile") navigateToProfile();
+                      }}
+                    >
                       <Typography>{setting}</Typography>
                     </MenuItem>
                   ))}
